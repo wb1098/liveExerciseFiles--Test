@@ -5,7 +5,62 @@
 //==========================================
 
 
-// array.concat()
+// ============ array.includes ============
+//arr.includes(searchElement)
+//arr.includes(searchElement, fromIndex)
+var a = [1, 2, 3];
+a.includes(2); // true
+a.includes(4); // false
+
+[1, 2, 3].includes(2);     // true
+[1, 2, 3].includes(4);     // false
+[1, 2, 3].includes(3, 3);  // false
+[1, 2, 3].includes(3, -1); // true ** A negative value searches from the index of array.length + fromIndex by asc.
+[1, 2, NaN].includes(NaN); // true
+
+
+//============== array.find() ===================
+//arr.find(callback[, thisArg])
+function isBigEnough(element) {
+  return element >= 15;  // returning first value greater that 15
+}
+
+[12, 5, 8, 130, 44].find(isBigEnough/* calback function*/); // 130
+
+// Find an object in an array by one of its properties
+var inventory = [
+    {name: 'apples', quantity: 2},
+    {name: 'bananas', quantity: 0},
+    {name: 'cherries', quantity: 5}
+];
+
+function findCherries(fruit) {
+    return fruit.name === 'cherries';
+}
+
+console.log(inventory.find(findCherries));
+// { name: 'cherries', quantity: 5 }
+
+// Find a prime number in an array
+function isPrime(element, index, array) {
+  var start = 2;
+  while (start <= Math.sqrt(element)) {
+    if (element % start++ < 1) {
+      return false;
+    }
+  }
+  return element > 1;
+}
+
+console.log([4, 6, 8, 12].find(isPrime)); // undefined, not found
+console.log([4, 5, 8, 12].find(isPrime)); // 5
+
+
+
+
+
+
+//============ array.concat() ==================
 
 var arr1 = [1,2,3,4];
 var arr2 = [2,5,7];
@@ -136,8 +191,10 @@ var countedNames = names.reduce(function (allNames, name) {
   else {
     allNames[name] = 1;
   }
-  return allNames;
+    return allNames;
 }, {});
+
+console.log(countedNames);
 // countedNames is:
 // { 'Alice': 2, 'Bob': 1, 'Tiff': 1, 'Bruce': 1 }
 
@@ -150,14 +207,85 @@ var countedNames = names.reduce(function (allNames, name) {
 var a = ['Wind', 'Rain', 'Fire'];
 a.join();    // 'Wind,Rain,Fire'
 a.join('-'); // 'Wind-Rain-Fire'
-var a = ['Wind', 'Rain', 'Fire'];
-a.join();      // 'Wind,Rain,Fire'
 a.join(', ');  // 'Wind, Rain, Fire'
-a.join(' + '); // 'Wind + Rain + Fire'
+console.log(a.join(' + ')); // 'Wind + Rain + Fire'
+
 a.join('');    // 'WindRainFire'
 
 
 //============== array.map() =========================
+/*var new_array = arr.map(function callback(currentValue, index, array) {
+    // Return element for new_array
+}[, thisArg])
+*/
+
+
+var numbers = [1, 5, 10, 15];
+var doubles = numbers.map(function(x) {
+   return x * 2;
+});
+console.log(doubles);
+// doubles is now [2, 10, 20, 30]
+// numbers is still [1, 5, 10, 15]
+
+var numbers = [1, 4, 9];
+var roots = numbers.map(Math.sqrt);
+console.log(roots);
+// roots is now [1, 2, 3]
+// numbers is still [1, 4, 9]
+
+
+// ** Mapping an array of number yo an array of square roots
+var numbers = [1, 4, 9];
+var roots = numbers.map(Math.sqrt);
+// roots is now [1, 2, 3]
+console.log(numbers + ' and ' + roots);
+// numbers is still [1, 4, 9]
+
+//Using map to reformat objects in an array
+var kvArray = [{key: 1, value: 10},
+               {key: 2, value: 20},
+               {key: 3, value: 30}];
+
+var reformattedArray = kvArray.map(function(obj) {
+   var rObj = {};
+   rObj[obj.key] = obj.value;
+   return rObj;
+});
+
+// reformattedArray is now [{1: 10}, {2: 20}, {3: 30}],
+
+// kvArray is still:
+// [{key: 1, value: 10},
+//  {key: 2, value: 20},
+//  {key: 3, value: 30}]
+console.log(JSON.stringify(reformattedArray));
+
+
+//Mapping an array of numbers using a function containing an argument
+var numbers = [1, 4, 9];
+var doubles = numbers.map(function(num) {
+  return num * 2;
+});
+
+// doubles is now [2, 8, 18]
+// numbers is still [1, 4, 9]
+console.log(numbers + ' became ' + doubles);
+
+// Using map to reverse a string
+var str = '12345';
+var output = Array.prototype.map.call(str, function(x) {
+  return x;
+}).reverse().join('');
+
+// Output: '54321'
+// Bonus: use '===' to test if original string was a palindrome
+console.log(str + ' became ' + output);
+
+
+
+
+
 
 
 
